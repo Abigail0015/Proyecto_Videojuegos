@@ -9,7 +9,7 @@
 
 //DECLARACIONES
 void display();
-
+void idle(int);
 
 
 //VARIABLES GLOBALES
@@ -25,7 +25,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(600, 600);
 	glutCreateWindow("PROYECTO VIDEOJUEGOS");
 	glutDisplayFunc(display);
-	glutPostRedisplay();
+	glutTimerFunc(1000/ FPS, idle,0); // activa una devolucion de llamada despues de una cantidad dee tiempo dada en milisegundos(1 seg = 1000 miliseg)
 	glutMainLoop();
 	return 0;
 }
@@ -35,7 +35,7 @@ void display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glLoadIdentity();
 
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_TRIANGLES); // genera un triangulo
 	{
 		glColor3f(1.0, 0.0, 0.0); glVertex2f(0.0f, 0.5f);
 		glColor3f(0.0, 1.0, 0.0); glVertex2f(-0.5f, -0.5f);
@@ -55,4 +55,12 @@ void display()
 		initialTime = finalTime; // El tiempo inicial ahora es igual al tiempo final de el calculo de la velocidad de los fotogramas
 
 	}
+
+	
+}
+
+void idle(int)
+{
+	glutPostRedisplay();
+	glutTimerFunc(1000 / FPS, idle, 0);
 }
